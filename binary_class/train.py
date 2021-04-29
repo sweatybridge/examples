@@ -89,6 +89,7 @@ def main():
     inference = clf.predict_proba(features)[:, 1]
     val = inference.tolist()
     print(np.histogram(-np.asarray(val, dtype=float)))
+    print(np.histogram_bin_edges(val, bins="auto"))
     print(get_bins(val))
     print(fast_histogram(val))
 
