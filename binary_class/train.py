@@ -87,15 +87,7 @@ def main():
     selected = np.random.choice(model_data.shape[0], size=1000, replace=False)
     features = model_data[FEATURE_COLS].iloc[selected]
     inference = clf.predict_proba(features)[:, 1]
-    val = inference.tolist()
-    print(np.histogram(val))
-    print(np.histogram(-np.asarray(val, dtype=float)))
-    print("-")
-    print(np.histogram_bin_edges(val, bins="auto"))
-    print(np.histogram_bin_edges(-np.asarray(val, dtype=float), bins="auto"))
-    print("-")
-    print(get_bins(val))
-    print(fast_histogram(val))
+    np.save("data.npy", np.asarray(inference.tolist(), dtype=float))
 
     ModelMonitoringService.export_text(
         features=features.iteritems(),
