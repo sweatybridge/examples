@@ -87,7 +87,7 @@ def main():
     selected = np.random.choice(model_data.shape[0], size=1000, replace=False)
     features = model_data[FEATURE_COLS].iloc[selected]
     inference = clf.predict_proba(features)[:, 1]
-    np.save("data.npy", np.asarray(inference.tolist(), dtype=float))
+    np.save("/artefact/data.npy", np.asarray(inference.tolist(), dtype=float))
 
     ModelMonitoringService.export_text(
         features=features.iteritems(),
