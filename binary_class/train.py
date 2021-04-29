@@ -88,7 +88,7 @@ def main():
     features = model_data[FEATURE_COLS].iloc[selected]
     inference = clf.predict_proba(features)[:, 1]
     val = inference.tolist()
-    print(np.histogram(val, dtype=float))
+    print(np.histogram(val))
     print(np.histogram(-np.asarray(val, dtype=float)))
     print("-")
     print(np.histogram_bin_edges(val, bins="auto"))
