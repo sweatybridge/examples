@@ -8,10 +8,11 @@ import pickle
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
+from bdrk.monitoring.service import ModelMonitoringService
+from bdrk.utils.histogram import fast_histogram, get_bins
 from bedrock_client.bedrock.analyzer.model_analyzer import ModelAnalyzer
 from bedrock_client.bedrock.analyzer import ModelTypes
 from bedrock_client.bedrock.api import BedrockApi
-from bedrock_client.bedrock.metrics.service import ModelMonitoringService
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 
@@ -86,8 +87,10 @@ def main():
     selected = np.random.choice(model_data.shape[0], size=1000, replace=False)
     features = model_data[FEATURE_COLS].iloc[selected]
     inference = clf.predict_proba(features)[:, 1]
-    hist = np.histogram(-np.asarray(inference.tolist(), dtype=float))
-    print(hist)
+    val = inference.tolist()
+    print(np.histogram(-np.asarray(val, dtype=float)))
+    print(get_bins(val))
+    print(fast_histogram(val))
 
     ModelMonitoringService.export_text(
         features=features.iteritems(),
