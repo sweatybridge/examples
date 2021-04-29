@@ -86,6 +86,8 @@ def main():
     selected = np.random.choice(model_data.shape[0], size=1000, replace=False)
     features = model_data[FEATURE_COLS].iloc[selected]
     inference = clf.predict_proba(features)[:, 1]
+    hist = np.histogram(-np.asarray(inference.tolist(), dtype=float))
+    print(hist)
 
     ModelMonitoringService.export_text(
         features=features.iteritems(),
